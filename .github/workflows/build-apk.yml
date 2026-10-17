@@ -15,8 +15,25 @@ jobs:
           distribution: temurin
           java-version: 17
           
-      - name: Setup Android SDK
-        run: android-actions/setup-android@v2
+      # ========== 手动安装 Android CmdLineTools 重点开始 ==========
+      - name: Download Android Command Line Tools
+        run: |
+          mkdir -p ~/android-sdk
+          cd ~/android-sdk
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076798_latest.zip
+          unzip -q commandlinetools-linux-11076798_latest.zip
+          mv cmdline-tools cmdline-tools-tmp
+          mkdir cmdline-tools
+          mv cmdline-tools-tmp cmdline-tools/latest
+        env:
+          ANDROID_HOME: ${{ github.workspace }}/android-sdk
+
+      - name: Set Android SDK env
+        run: echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+
+      - name: Add sdkmanager to PATH
+        run: echo "$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
+      # ========== 手动SDK安装结束 ==========
         
       # GitHub ubuntu 镜像已预装 Android SDK，只需接受许可证并补装所需组件
       - name: Accept SDK licenses
