@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DLNA 相册</string>
+    <string name="searching_hint">正在搜索 DLNA 服务器…\n请确认手机与服务器在同一 Wi-Fi 下</string>
+    <string name="cd_server">服务器</string>
+    <string name="cd_media">媒体</string>
+    <string name="cd_play">播放</string>
+    <string name="cd_image">图片</string>
+    <string name="action_refresh">重新搜索</string>
+</resources>
