@@ -14,7 +14,10 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-
+          
+      - name: Setup Android SDK
+        run: android-actions/setup-android@v3
+        
       # GitHub ubuntu 镜像已预装 Android SDK，只需接受许可证并补装所需组件
       - name: Accept SDK licenses
         run: |
