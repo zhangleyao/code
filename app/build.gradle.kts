@@ -46,7 +46,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
 
     // DLNA / UPnP
-    implementation("org.jupnp:jupnp:2.7.1")
+    implementation("org.jupnp:jupnp-core:2.6.1")
 
     // 图片加载
     implementation("io.coil-kt:coil:2.6.0")
