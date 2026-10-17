@@ -7,40 +7,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # 重点：指定成品安卓CI容器镜像
+    container:
+      image: ghcr.io/code0987/android-ci:2.1.0
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-          
-      # ========== 手动安装 Android CmdLineTools 重点开始 ==========
-      - name: Download Android Command Line Tools
-        run: |
-          mkdir -p ~/android-sdk
-          cd ~/android-sdk
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076798_latest.zip
-          unzip -q commandlinetools-linux-11076798_latest.zip
-          mv cmdline-tools cmdline-tools-tmp
-          mkdir cmdline-tools
-          mv cmdline-tools-tmp cmdline-tools/latest
-        env:
-          ANDROID_HOME: ${{ github.workspace }}/android-sdk
-
-      - name: Set Android SDK env
-        run: echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
-
-      - name: Add sdkmanager to PATH
-        run: echo "$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
-      # ========== 手动SDK安装结束 ==========
-        
-      # GitHub ubuntu 镜像已预装 Android SDK，只需接受许可证并补装所需组件
-      - name: Accept SDK licenses
-        run: |
-          yes | sdkmanager --licenses > /dev/null 2>&1 || true
-          sdkmanager "platforms;android-34" "build-tools;34.0.0" > /dev/null
-
+      
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.7
